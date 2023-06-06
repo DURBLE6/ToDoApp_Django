@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedular - Dashboard</title>
+    
+    <link href="{% static 'scheduleapp/bootstrap/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'scheduleapp/css/animate.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'scheduleapp/css/carousel.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'scheduleapp/fontawesome-free/css/all.min.css' %}" type="text/css" rel="stylesheet">
+
+    <style type="text/css">
+     
+    </style>
+</head>
+<body>
+    <main>
+        <section>
+            <div class="container-fluid">
+                <div class="row justify-content-center mt-5">
+                    <div class="col-md-6 mt-2 bg-success text-light text-center">
+                        <h3><strong>Notification</strong></h3>
+                        <div>
+                            {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {% if message.tags %} alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+                            {% endfor %}
+                        {% endif %}
+                            <a href="{% url 'home' %}" style="text-decoration: none; color: white;">Click here to login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="{% static 'scheduleapp/bootstrap/js/bootstrap.bundle.js' %}" type="text/js" lang="javascript"></script>
+</body>
+</html>

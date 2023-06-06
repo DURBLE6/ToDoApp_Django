@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedular - Dashboard</title>
+    
+    <link href="{% static 'scheduleapp/bootstrap/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'scheduleapp/css/animate.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'scheduleapp/css/carousel.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'scheduleapp/fontawesome-free/css/all.min.css' %}" type="text/css" rel="stylesheet">
+
+    <style type="text/css">
+      
+    </style>
+</head>
+<body>
+    <main>
+        <section>
+            <header>
+                <div class="container-fluid">
+                    <div class="row d-flex justify-content-end bg-dark" style="margin-top: -50px; height: 45px;">
+                        <div class="col-md pt-2 text-dark">
+                            <h5><span><a href="{% url 'home' %}" style="text-decoration: none;">SCHEDULAR</a></span></h5>
+                        </div>
+                        <div class="col-md pt-1 text-end">
+                            <a class="btn btn-dark" style="text-decoration: none;" href="{% url 'signout' %}" onclick="return confirm('Are you sure you want to sign out')">Sign out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </section>
+        <section>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md pt-2">
+                            <h5>WELCOME {{ user.first_Name }}</h5>
+                    </div>
+                    <div class="col-md text-end pt-2">
+                        <a class="btn btn-outline-secondary" href="{% url 'alltasks' %}"> All Tasks</a>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-5">
+                    <div class="col-md-6 mt-2 text-center">
+                        <h5><strong>TASK</strong></h5>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-3">
+                    <div class="col-md-6 border-dark" style="border: solid 1px; border-radius: 3px;">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr class="text-center">
+                                    <td><strong>LABEL</strong></td>
+                                    <td><strong>DETAILS</strong></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Title: </td>
+                                    <td class="text-center"> {{ task.title }} </td>
+                                </tr>
+                                <tr>
+                                    <td>Notes: </td>
+                                    <td class="text-center">{{ task.notes }}</td>
+                                </tr>
+                                    <tr>
+                                    <td>Date Created: </td>
+                                    <td class="text-center"> {{ task.date}} </td>
+                                </tr>
+                                <tr>
+                                    <td>Status: </td>
+                                    <td class="text-center"> {{ task.status }} </td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        <form action="{% url 'complete' task.id %}" method="post">
+                            {% csrf_token %}
+                            <p>
+                                <input name="taskstat" type="hidden" value="{{ task.id }}">
+                            </p>
+                            <p class="text-center">
+                                Mark task as completed:
+                                <select name="taskupdate" style="width: 80px;" id="status">
+                                    <option selected>Please select</option>
+                                    <option value="IN PROGRESS">No</option>
+                                    <option value="COMPLETED">Yes</option>
+                                </select>
+                                <button type="submit" class="btn btn-success" id="complete">Done</button> 
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="{% static 'scheduleapp/bootstrap/js/bootstrap.bundle.js' %}" type="text/js" lang="javascript"></script>
+    <script src="{% 'static' scheduleapp/jquery.min.js%}">
+        $(document).ready(function(){
+            $('#complete').attr('disabled', true);
+            $('#status').change(function(){
+                var selectedValue = $(this).val();
+                if(selectedValue == 'IN PROGRESS' || selectedValue == 'COMPLETED'){
+                    $('#complete').attr('disabled', false);
+                }
+                else{
+                    $('#complete').attr('disabled', true);
+                }
+            });
+        })
+    </script>
+</body>
+</html>

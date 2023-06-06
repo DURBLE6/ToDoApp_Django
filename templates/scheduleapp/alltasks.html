@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedular - All tasks </title>
+    
+    <link href="{% static 'scheduleapp/bootstrap/css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'scheduleapp/css/animate.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'scheduleapp/css/carousel.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'scheduleapp/fontawesome-free/css/all.min.css' %}" type="text/css" rel="stylesheet">
+
+    <style type="text/css">
+        /* div{
+         border: solid 1px;
+    }  */
+    </style>
+</head>
+<body>
+    <main>
+        <section>
+            <header>
+                <div class="container-fluid">
+                    <div class="row d-flex justify-content-end bg-dark" style="margin-top: -50px; height: 45px;">
+                        <div class="col-md pt-2 text-dark">
+                            <h5><span><a href="{% url 'home' %}" style="text-decoration: none;">SCHEDULAR</a></span></h5>
+                        </div>
+                        <div class="col-md pt-1 text-end">
+                            <a class="btn btn-dark" style="text-decoration: none;" href="{% url 'signout' %}" onclick="return confirm('Are you sure you want to sign out')">Sign out</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </section>
+        <section>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md mt-2">
+                            <h5>WELCOME {{ users.first_Name }}</h5>
+                    </div>
+                    <div class="col-md text-end mt-2">
+                        <a class="btn btn-dark" href="{% url 'newtask' %}"> + NEW</a>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-5">
+                    <div class="col-md-6 mt-2 text-center">
+                        <h5><strong>ALL TASKS</strong></h5>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-3">
+                    
+                    <div class="col-md-6">
+                        {% if tasks %}
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th> Title </th>
+                                    <th> Status </th>
+                                    <th> Action </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for task in tasks %}
+                                <tr>
+                                     <td><a class="" href="{% url 'dashboard' task.title %}" style="text-decoration: none;">{{ task.title }}</a></td>
+                                     <td> {{ task.status }} </td>
+                                    <td><a class="badge bg-danger" href="{% url 'delete' task.title %}" style="text-decoration: none;" onclick="return confirm('Are you sure you want to delete this task?')">Delete</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                            <div class="col-md-6" style="border: solid 1px; border-radius: 3px;">
+                                <h4>You current do not have any task</h4>
+                            </div>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="{% static 'scheduleapp/bootstrap/js/bootstrap.bundle.js' %}" type="text/js" lang="javascript"></script>
+</body>
+</html>
